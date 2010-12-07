@@ -11,6 +11,6 @@
   },
   "background_page": "background.html",
   "plugins": [
-    { "path": "libfatrat-chrome.so", "public": true }
+    { "path": "libfatrat-chrome.so" }
   ]
 }
