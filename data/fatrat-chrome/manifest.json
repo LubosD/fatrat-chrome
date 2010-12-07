@@ -1,0 +1,16 @@
+{
+  "name": "FatRat Download Manager integration",
+  "version": "0.1",
+  "description": "Enables you to add transfers to FatRat from Chrome with ease.",
+  "permissions": [
+    "contextMenus"
+  ],
+  "icons": {
+    "16": "fatrat-small.png",
+	"48": "fatrat.png"
+  },
+  "background_page": "background.html",
+  "plugins": [
+    { "path": "libfatrat-chrome.so", "public": true }
+  ]
+}
