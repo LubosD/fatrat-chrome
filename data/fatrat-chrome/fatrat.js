@@ -32,9 +32,9 @@ chrome.extension.onRequest.addListener(
 );
 
 chrome.tabs.onRemoved.addListener(function(tabId) {
-	if (fatratTabs[sender.tab.id]) {
-		chrome.contextMenus.remove(fatratTabs[sender.tab.id].menuIdLink);
-		chrome.contextMenus.remove(fatratTabs[sender.tab.id].menuIdSel);
+	if (fatratTabs[tabId]) {
+		chrome.contextMenus.remove(fatratTabs[tabId].menuIdLink);
+		chrome.contextMenus.remove(fatratTabs[tabId].menuIdSel);
 		delete fatratTabs[sender.tab.id];
 	}
 });
