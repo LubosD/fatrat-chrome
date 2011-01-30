@@ -1,6 +1,6 @@
 {
   "name": "FatRat Download Manager integration",
-  "version": "0.1",
+  "version": "0.2",
   "description": "Enables you to add transfers to FatRat from Chrome with ease.",
   "permissions": [
     "contextMenus", "tabs", "http://*/*", "https://*/*"
