@@ -3,7 +3,7 @@
   "version": "0.1",
   "description": "Enables you to add transfers to FatRat from Chrome with ease.",
   "permissions": [
-    "contextMenus"
+    "contextMenus", "tabs", "http://*/*", "https://*/*"
   ],
   "icons": {
     "16": "fatrat-small.png",
