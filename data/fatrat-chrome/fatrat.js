@@ -1,17 +1,23 @@
 function linkOnClick(info, tab) {
 	plugin = document.getElementById('fatrat-npapi');
-	plugin.handleLink(info.linkUrl);
-}
-
-function selectionOnClick(info, tab) {
-	plugin = document.getElementById('fatrat-npapi');
-	plugin.handleLink(info.selectionText);
+	var url;
+	
+	if (info.linkUrl)
+		url = info.linkUrl;
+	else if (info.srcUrl)
+		url = info.srcUrl;
+	else if (info.frameUrl)
+		url = info.frameUrl;
+	else if (info.pageUrl)
+		url = info.pageUrl;
+	else if (info.selectionText)
+		url = info.selectionText;
+	plugin.handleLink(url);
 }
 
 fatratTabs = [];
 
-chrome.contextMenus.create({"title": 'Download Link with FatRat', "contexts":['link'], "onclick": linkOnClick});
-chrome.contextMenus.create({"title": 'Download with FatRat', "contexts":['selection'], "onclick": selectionOnClick});
+chrome.contextMenus.create({"title": 'Download with FatRat', "contexts":['all'], "onclick": linkOnClick});
 
 chrome.extension.onRequest.addListener(
 	function(request, sender, sendResponse) {
@@ -19,13 +25,11 @@ chrome.extension.onRequest.addListener(
 			console.log(request.status);
 			if (!fatratTabs[sender.tab.id]) {
 				var hn = getHostname(sender.tab.url);
-				var mid = chrome.contextMenus.create({"title": 'Download Link with FatRat at '+hn, "contexts":['link'], "onclick": function(info) { linkOnClickRemote(info, sender.tab.id); } });
-				var mid2 = chrome.contextMenus.create({"title": 'Download with FatRat at '+hn, "contexts":['selection'], "onclick": function(info) { selectionOnClickRemote(info, sender.tab.id); } });
-				fatratTabs[sender.tab.id] = { hostname: hn, menuIdLink : mid, menuIdSel : mid2 };
+				var mid = chrome.contextMenus.create({"title": 'Download Link with FatRat at '+hn, "contexts":['all'], "onclick": function(info) { linkOnClickRemote(info, sender.tab.id); } });
+				fatratTabs[sender.tab.id] = { hostname: hn, menuIdLink : mid };
 			}
 		} else if (request.status == "other" && fatratTabs[sender.tab.id]) {
 			chrome.contextMenus.remove(fatratTabs[sender.tab.id].menuIdLink);
-			chrome.contextMenus.remove(fatratTabs[sender.tab.id].menuIdSel);
 			delete fatratTabs[sender.tab.id];
 		}
 	}
@@ -60,14 +64,21 @@ function getHostname(str) {
 
 function linkOnClickRemote(info, tabId) {
 	console.log("Link submit to tabId "+tabId);
-	link = info.linkUrl;
-	remoteStart(tabId, link);
-}
-
-function selectionOnClickRemote(info, tabId) {
-	console.log("Link submit to tabId "+tabId);
-	link = info.selectionText;
-	remoteStart(tabId, link);
+	
+	var url;
+	
+	if (info.linkUrl)
+		url = info.linkUrl;
+	else if (info.srcUrl)
+		url = info.srcUrl;
+	else if (info.frameUrl)
+		url = info.frameUrl;
+	else if (info.pageUrl)
+		url = info.pageUrl;
+	else if (info.selectionText)
+		url = info.selectionText;
+	
+	remoteStart(tabId, url);
 }
 
 function remoteStart(tabId, link) {
