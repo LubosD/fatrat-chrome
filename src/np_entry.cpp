@@ -137,7 +137,7 @@ NP_Initialize(NPNetscapeFuncs* pFuncs, NPPluginFuncs* pluginFuncs)
   pluginFuncs->setvalue      = NPP_SetValue;
   pluginFuncs->javaClass     = NULL;
 
-  NPP_Initialize();
+  //NPP_Initialize();
 
   return NPERR_NO_ERROR;
 }

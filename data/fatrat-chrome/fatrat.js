@@ -4,14 +4,14 @@ function linkOnClick(info, tab) {
 	
 	if (info.linkUrl)
 		url = info.linkUrl;
+	else if (info.selectionText)
+		url = info.selectionText;
 	else if (info.srcUrl)
 		url = info.srcUrl;
 	else if (info.frameUrl)
 		url = info.frameUrl;
 	else if (info.pageUrl)
 		url = info.pageUrl;
-	else if (info.selectionText)
-		url = info.selectionText;
 	plugin.handleLink(url);
 }
 
@@ -25,7 +25,7 @@ chrome.extension.onRequest.addListener(
 			console.log(request.status);
 			if (!fatratTabs[sender.tab.id]) {
 				var hn = getHostname(sender.tab.url);
-				var mid = chrome.contextMenus.create({"title": 'Download Link with FatRat at '+hn, "contexts":['all'], "onclick": function(info) { linkOnClickRemote(info, sender.tab.id); } });
+				var mid = chrome.contextMenus.create({"title": 'Download with FatRat at '+hn, "contexts":['all'], "onclick": function(info) { linkOnClickRemote(info, sender.tab.id); } });
 				fatratTabs[sender.tab.id] = { hostname: hn, menuIdLink : mid };
 			}
 		} else if (request.status == "other" && fatratTabs[sender.tab.id]) {

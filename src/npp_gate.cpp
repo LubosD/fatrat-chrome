@@ -49,7 +49,7 @@ extern NPNetscapeFuncs NPNFuncs;
 char*
 NPP_GetMIMEDescription(void)
 {
-  return "application/x-fatrat-interface:fatrat:FatRat NPAPI plugin";
+  return (char*) "application/x-fatrat-interface:fatrat:FatRat NPAPI plugin";
 }
 
 NPError NPP_Initialize(void)
@@ -110,10 +110,10 @@ NPError NPP_GetValue(NPP instance, NPPVariable variable, void *value)
 
   switch (variable) {
   case NPPVpluginNameString:
-    *((char **)value) = "FatRat NPAPI plugin";
+    *((char **)value) = (char*) "FatRat NPAPI plugin";
     break;
   case NPPVpluginDescriptionString:
-    *((char **)value) = "FatRat NPAPI plugin for Google Chrome integration";
+    *((char **)value) = (char*) "FatRat NPAPI plugin for Google Chrome integration";
     break;
   case NPPVpluginScriptableNPObject:
   {

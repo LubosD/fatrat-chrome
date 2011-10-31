@@ -322,11 +322,11 @@ ScriptablePluginObject::Invoke(NPIdentifier nname, const NPVariant *args,
 	
 	if (name && !strcmp((const char *)name, "handleLink") && argCount == 1 && NPVARIANT_IS_STRING(args[0])) {
 		const char* link;
-#ifndef XUL_1_9_2
+//#ifndef XUL_1_9_2
 		link = args[0].value.stringValue.UTF8Characters;
-#else
-		link = args[0].value.stringValue.utf8characters;
-#endif
+//#else
+//		link = args[0].value.stringValue.utf8characters;
+//#endif
 		char cmdline[512] = "dbus-send --print-reply --type=method_call --dest=info.dolezel.fatrat / info.dolezel.fatrat.addTransfers string:";
 		strncat(cmdline, link, 510-strlen(cmdline));
 		cmdline[511] = 0;
@@ -334,6 +334,7 @@ ScriptablePluginObject::Invoke(NPIdentifier nname, const NPVariant *args,
 		if (system(cmdline))
 		{
 			if (!fork()) {
+				daemon(0, 0);
 				if (execlp("fatrat", "fatrat", link, 0) == -1)
 					return false;
 			}

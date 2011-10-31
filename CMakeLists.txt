@@ -40,7 +40,7 @@ add_library(fatrat-chrome SHARED ${fatrat-chrome_SRCS})
 
 target_link_libraries(fatrat-chrome)
 
-message(STATUS "******** After the NPAPI plugin is compiled, run ./data/package.sh ${CMAKE_BINARY_DIR}/fatrat-chrome.so to create a .crx file")
+message(STATUS "******** After the NPAPI plugin is compiled, run ./data/package.sh ${CMAKE_BINARY_DIR}/libfatrat-chrome.so to create a .crx file")
 message(STATUS "******** You may have to terminate Chrome/Chromium before running that command")
 
-#execute_process(COMMAND data/package.sh "${CMAKE_BINARY_DIR}/fatrat-chrome.so")
+# execute_process(COMMAND data/package.sh "${CMAKE_BINARY_DIR}/lib	fatrat-chrome.so")
